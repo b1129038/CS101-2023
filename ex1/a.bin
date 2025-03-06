@@ -1,0 +1,53 @@
+#include <stdio.h>
+
+int main() {
+    int arr1[] = {1, 2, 3};
+    int arr2[] = {4, 5, 6};
+    int arr3[] = {7, 8, 9};
+    int size = 3;
+
+    FILE *file = fopen("a.bin", "wb");
+    if (file == NULL) {
+        printf("無法開啟檔案！\n");
+        return 1;
+    }
+
+    fwrite(arr1, sizeof(int), size, file);
+    fwrite(arr2, sizeof(int), size, file);
+    fwrite(arr3, sizeof(int), size, file);
+
+    fclose(file);
+
+    file = fopen("a.bin", "rb");
+    if (file == NULL) {
+        printf("無法開啟檔案！\n");
+        return 1;
+    }
+
+    int read_arr1[size], read_arr2[size], read_arr3[size];
+    fread(read_arr1, sizeof(int), size, file);
+    fread(read_arr2, sizeof(int), size, file);
+    fread(read_arr3, sizeof(int), size, file);
+
+    fclose(file);
+
+    printf("arr1: ");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", read_arr1[i]);
+    }
+    printf("\n");
+
+    printf("arr2: ");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", read_arr2[i]);
+    }
+    printf("\n");
+
+    printf("arr3: ");
+    for (int i = 0; i < size; i++) {
+        printf("%d ", read_arr3[i]);
+    }
+    printf("\n");
+
+    return 0;
+}
